@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block content %}
+{{clap_form}}
+    {{post.body}}
+    <br>
+    {{request.user.profile.bookmark.all}}
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="{% if post in request.user.profile.bookmark.all %}un{% endif %}bookmark">
+        <input type="submit" value="{% if post in request.user.profile.bookmark.all %}Remove from Bookmark{% else %}Add to bookmark{% endif %}">
+    </form>
+    {{request.user.claps.claps_given}}
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value='clap'>
+        <input type="submit" value="Clap">
+    </form>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value='comment'>
+        <input type="text" name="comment">
+        <input type="submit" value="Comment">        
+    </form>    
+    <a href="{% url 'blog:pdf' post=post %}" role='button'>Print As PDF</a>    
+{% endblock %}

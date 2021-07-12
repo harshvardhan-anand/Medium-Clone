@@ -1,0 +1,27 @@
+# In the console
+# python manage.py shell
+# copy-paste the following code
+
+from blog.models import Post
+import numpy as np
+from django.contrib.auth.models import User
+from faker import Faker
+
+all_tags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Tag6', 'Tag7', 'Tag8', 'Tag9', 'Tag10']
+tag_finder = lambda : [np.random.choice(all_tags) for _ in range(4)]
+Faker.seed(589)
+faker = Faker()    
+for _ in range(200):
+    username=faker.profile().get('username')
+    password=123
+    user = User.objects.create_user(username=username, password=password)
+    title = faker.sentence()
+    slug = title.replace(' ', '-').replace('.', '')
+    body = faker.paragraph(nb_sentences=20)
+    post = Post(title=title, author=user, body=body, status=np.random.choice(['draft', 'published']), slug=slug, total_claps=np.random.randint(1, 2000))
+
+    user.save()
+    post.save()
+
+    tag_obj = [Tag.objects.get_or_create(tag=tag)[0] for tag in tag_finder()]
+    post.tags.add(*tag_obj)

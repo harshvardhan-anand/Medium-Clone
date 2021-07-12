@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>{{author}}</h3>
+    {% if request.user.username != author.username %}
+        <form action="{{author.get_absolute_url}}" method='post'>
+            {% csrf_token %}
+            <input type="hidden" 
+                name="action" 
+                value="{% if request.user.profile in author.followers.all %}un{% endif %}followed"
+            >
+            <input type="submit" value="{% if request.user.profile in author.followers.all %}UN{% endif %}FOLLOW">
+        </form>
+    {% endif %}
+{% endblock content %}

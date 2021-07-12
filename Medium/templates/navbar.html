@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<div class='container-fluid'>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="navbar-nav">
+            <a class="nav-link active" href="{% url 'blog:Home' %}">Home</a>
+            <a class="nav-link active" href="{% url 'user_info:login' %}">login</a>
+            <a class="nav-link active" href="{% url 'user_info:logout' %}">logout</a>
+            <a href="{% url 'user_info:notifications' %}" class="nav-link active">Notifications</a>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'user_info:membership' request.user.username%}" class='nav-link active'>Membership</a>
+            {% endif %}
+            {% comment %} <a class="nav-link active" href="{% url 'user_info:password_change' %}">password_change</a>
+            <a class="nav-link active" href="{% url 'user_info:password_change_done' %}">password_change_done</a>
+            <a class="nav-link active" href="{% url 'user_info:password_reset' %}">password_reset</a>
+            <a class="nav-link active" href="{% url 'user_info:password_reset_done' %}">password_reset_done</a>
+            <a class="nav-link active" href="{% url 'user_info:password_reset_complete' %}">password_reset_complete</a> {% endcomment %}
+            
+        </div>
+    </nav>
+    User = {{request.user}}
+    <br>
+    Profile = {{request.user.profile}}
+    <br>
+</div>

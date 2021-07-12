@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% extends 'base_nologin.html' %}
+
+{% block content %}
+    {% for r, v in info.items %}
+        <b>{{r}}</b>  - {{v}}<br> <br>
+    {% endfor %}
+    {% with all_posts as posts %}
+        {# Tags #}
+        <div class="tags">
+            {% for tag in tags %}
+                <a href="{% url 'blog:TagRelatedPost' tag.tag%}">{{tag}}</a>
+            {% endfor %}
+        </div>
+
+        {# Trending Posts #}
+        <div class="recomended-posts">     
+                {% for post in posts%}
+                        <a href="{{post.get_absolute_url}}">{{ post }}</a>
+                        <br>
+                        <a href="{{post.author.get_absolute_url}}">{{ post.author }}</a>
+                        <br> <br>
+                    {% endfor %}
+        </div>
+    {% endwith %}
+        <div class="other-posts">     
+                {% for post in other_posts%}
+                        <a href="{{post.get_absolute_url}}">{{ post }}</a>
+                        <br>
+                        <a href="{{post.author.get_absolute_url}}">{{ post.author }}</a>
+                        <br> <br>
+                    {% endfor %}
+        </div>        
+{% endblock content %}

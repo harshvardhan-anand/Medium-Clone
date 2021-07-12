@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Follow this tag</h3>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="tag" value="{{tag}}">
+        <input type="hidden" name="action" value="{% if tag_obj in request.user.profile.tags.all %}un{% endif %}follow">
+        <input type="submit" value="{% if tag_obj in request.user.profile.tags.all %}UN{% endif %}FOLLOW">
+    </form>
+    {% for post in posts %}
+        <a href="{{post.get_absolute_url}}">{{ post }}</a>
+        <br>
+    {% endfor %}
+
+{% endblock content %}
